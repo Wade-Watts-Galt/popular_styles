@@ -1,0 +1,337 @@
+:root {
+    /* Geometric foci equation: 
+      (1/720 + 1/(width in pixels))^-1 = a1
+
+      (64/a1)^(1/5) (works for tablet)
+      The algorithm might need to be offset as it is calculating in terms of pixels and not rem
+      conversion: 1rem = 16px (typically)
+      for mobile get rid of root 1/5
+      for what ever reason when root 5 the mobile it acually resulted in a perfect size for small laptops.
+
+      mobile up 375: .488888 repeating use function do not root.
+
+      375 to 420 .515rem
+      tablet 768: use function .7612
+      small laptops: from 1000 up to 1440: .86664 
+
+      I found the algorithm: 
+      (1/(1440/16)+1/((width of screen)/16)^1
+      where 1440 is considered normal
+      because 1440 is considered normal it must equal 1.
+      so (16/45)x = 1
+      ((16/45)/16) is our scalar
+      so ((16/45)(1/normal + 1/(current width))^-1)* 1rem
+
+    */
+    --base-size: 1rem;
+    --scale-ratio: 1.16;
+    --object-scale-constant: 4;
+    --general-type: "League Spartan", sans-serif;
+    --extensive-text: "Libre Baskerville", serif;
+
+
+    /* Heading Font-sizes */
+    --h6-fs: calc(var(--base-size)*.84);
+    --h5-fs: calc(var(--base-size) * 1.26);
+    --h4-fs: calc(var(--base-size) * var(--scale-ratio));
+    --h3-fs: calc(var(--base-size) * var(--scale-ratio)* var(--scale-ratio)* var(--scale-ratio));
+    --h2-fs: calc(var(--base-size) * var(--scale-ratio)* var(--scale-ratio)* var(--scale-ratio)* var(--scale-ratio)* var(--scale-ratio));
+    --h1-fs: calc(var(--base-size) * var(--scale-ratio)* var(--scale-ratio)* var(--scale-ratio)* var(--scale-ratio)* var(--scale-ratio)* var(--scale-ratio)* var(--scale-ratio));
+
+    /*Margins */
+    --mn-m: calc(var(--base-size)/2);
+    --mn-xs: calc(var(--mn-m)/4);
+    --mn-s: calc(var(--mn-m)/2);
+    --mn-l: calc(var(--mn-m)*2);
+    --mn-xl: calc(var(--mn-m)*3);
+    --mn-xxl: calc(var(--mn-m)*4);
+    --mn-xxl: calc(var(--mn-m)*8);
+    /*Component-Sizing*/
+
+    /*Button-Sizing*/
+    --btn-xxlw: calc(3* var(--base-size));
+    --btn-xlw: calc(var(--btn-xxlw)/(var(--scale-ratio)));
+    --btn-lw: calc(var(--btn-xlw)/(var(--scale-ratio)));
+    --btn-mw: calc(var(--btn-lw)/var(--scale-ratio));
+  }
+
+  /*.modest-background {
+    box-shadow: rgb(243, 248, 243) 0px 1px 0px;
+    background: linear-gradient(rgb(240, 246, 243) 0%, rgb(232, 241, 243) 100%);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(209, 217, 227);
+    border-image: initial;
+  }
+ */
+  html{
+    font-size: var(--base-size);
+    font-family: var(--general-type);
+    background-color: rgb(243, 243, 243);
+    padding-top: 10dvh;
+  }
+
+  p{
+    font-size: var(--base-size);
+    font-family: var(--extensive-text);
+    line-height: calc(var(--base-size)*1.4);
+  }
+
+  h6{
+    font-size: var(--h6-fs);
+    font-family: var(--general-type);
+    font-weight: 500;
+    line-height: calc(var(--h6-fs)*1.4);
+  }
+
+  h5{
+    font-size: var(--h5-fs);
+    font-family: var(--extensive-text);
+    font-weight: 500;
+    line-height: calc(var(--h5-fs)*1.4);
+  }
+
+  h4{
+    font-size: calc(var(--h1-fs)*var(--scale-ratio)*var(--scale-ratio)*var(--scale-ratio));
+    font-family: var(--general-type);
+    font-weight: 500;
+    line-height: calc(var(--h1-fs)*var(--scale-ratio)*var(--scale-ratio)*var(--scale-ratio)*1.4);
+  }
+
+  h3{
+    font-size: var(--h3-fs);
+    font-family: var(--general-type);
+    font-weight: 500;
+    line-height: calc(var(--h3-fs)*1.4);
+  }
+
+  h2{
+    font-size: var(--h2-fs);
+    font-family: var(--general-type);
+    font-weight: 600;
+    line-height: calc(var(--h2-fs)*1.2);
+  }
+
+  h1{
+    font-size: var(--h1-fs);
+    font-family: var(--general-type);
+    font-weight: bold;
+    line-height: calc(var(--h1-fs)*1.2);
+
+  }
+
+  h6,h5,h4,h3,h2,h1{
+    margin: 0;
+    padding: 0;
+  }
+
+  strong{
+    font-weight: 800;
+    font-family: var(--general-type);
+  }
+
+  .corporate{
+    font-family: var(--general-type);
+  }
+
+  blockquote {
+    font-family: var(--extensive-text); /* Use serif font for blockquote */
+    font-size: calc(var(--base-size) * 1.1); /* Slightly larger font size for emphasis */
+    line-height: calc(var(--base-size) * 1.5); /* Increased line height for readability */
+    font-weight: normal; /* Typically blockquotes are not bold */
+    color: #333; /* Darker color for readability */
+    margin: 1.5em 0; /* Add vertical space around blockquote */
+    padding: 1em 1.5em; /* Add padding inside the blockquote */
+    border-left: 4px solid #ddd; /* Subtle left border */
+    background-color: #f9f9f9; /* Light background color */
+    quotes: "“" "”" "‘" "’"; /* Custom quotes for the blockquote */
+}
+
+
+#signInSignUpContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Ensure it is on top of all other content */
+}
+
+#signInSignUpContainer .form-container {
+    width: 300px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#signInSignUpContainer form {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* floating styles*/
+
+.floating-label-input {
+    position: relative;
+    margin: 20px 0;
+    width: 100%;
+    
+}
+
+.floating-label-input input {
+    width: 93%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    font-size: 16px;
+    outline: none;
+}
+
+.floating-label-input label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #aaa;
+    transition: 0.2s;
+    pointer-events: none;
+}
+
+.floating-label-input input:focus + label,
+.floating-label-input input:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 10px;
+    font-size: 12px;
+    color: #FF4500;
+}
+
+.scrollWindow{
+    height: 75%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 97%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* Stunning Submit Button */
+/* Stunning Submit Button */
+.submit-button {
+    background-color: #FF5733;
+    color: white;
+    border: none;
+    padding: 15px 60px; /* Increased padding for twice the width */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px auto; /* Center the button */
+}
+
+.submit-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background-color: rgba(255, 255, 255, 0.15);
+    transition: all 0.75s ease;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+}
+
+.submit-button:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.submit-button:hover {
+    background-color: #FF4500;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.submit-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+.btn-primary{
+    height: var(--btn-xxlw);
+}
+
+.btn-secondary{
+    height: var(--btn-xlw);
+}
+
+.btn-accent{
+    height: var(--btn-lw);
+}
+
+p{
+    margin: 0;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 64px);
+    grid-auto-rows: 64px;
+    gap: 0; /* No gap between grid items to ensure borders are touching */
+    overflow: auto;
+
+}
+
+.grid-item {
+    width: 64px;
+    height: 64px;
+    border: .5px solid black;
+    box-sizing: border-box; /* Include border in width/height calculation */
+}
+
+
+
+
+/* Mobile up to 375px */
+@media (max-width: 374.98px) {
+  section{
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+/* 375px to 420px */
+@media (min-width: 375px) and (max-width: 419.98px) {
+  section{
+    flex-direction: column;
+    width: 100%;
+  }
+
+}
+
+/* 768px for tablets */
+@media (min-width: 768px) and (max-width: 999.98px) {
+  :root{ --base-size: 0.856rem; /* Multiplied by 1.125 because it's proportional but margin is wasted. */
+  }
+}
+
+/* Small laptops from 1000px to 1440px */
+@media (min-width: 1000px) and (max-width: 1439.98px) {
+  :root{ --base-size: 0.86664rem;
+  }
+}
